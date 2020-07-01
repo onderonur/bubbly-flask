@@ -35,6 +35,7 @@ Live demo with Node.js API deployed on Heroku is **[here](https://bubbly-chat.he
 To run it in development mode:
 ##### API:
 #### `cd api`
+#### `python -m venv env`
 #### `env/Scripts/Activate`
 #### `pip install`
 #### `python app.py`

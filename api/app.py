@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, session, send_from_directory
+from flask import Flask, request, session, send_from_directory, jsonify
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from nanoid import generate
 from time import time
@@ -12,6 +12,25 @@ JWT_SECRET_KEY = 'veryverysecret'
 
 app = Flask(__name__, static_folder="../client/build")
 app.config["SECRET_KEY"] = "secret!"
+
+themed_rooms = [
+    {"title": 'Random Chat', "slug": 'random-chat'},
+    {"title": 'Music', "slug": 'music'},
+    {"title": 'Movies', "slug": 'movies'},
+    {"title": 'Comics', "slug": 'comics'},
+    {"title": 'Games', "slug": 'games'},
+    {"title": 'Books', "slug": 'books'},
+    {"title": 'Anime & Manga', "slug": 'anime-and-manga'},
+    {"title": 'Arts & Creativity', "slug": 'arts-and-creativity'},
+    {"title": 'Technology', "slug": 'technology'},
+]
+
+
+@app.route("/api/rooms/themed")
+def themed_rooms_list():
+    return jsonify(themed_rooms)
+
+
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 app_users = {}

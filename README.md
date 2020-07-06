@@ -18,6 +18,7 @@ Live demo with Node.js API deployed on Heroku is **[here](https://bubbly-chat.he
 * Invite/share buttons
 * Sound notification when the window is not focused
 * "Back to bottom" button to scroll down automatically
+* Joining conversations by using themed rooms
 
 ### Stack
 * API Framework: [Flask](https://flask.palletsprojects.com/)

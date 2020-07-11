@@ -8,7 +8,7 @@ import notifications
 import jwt
 import datetime
 
-JWT_SECRET_KEY = 'veryverysecret'
+jwt_secret_key = 'veryverysecret'
 
 app = Flask(__name__, static_folder="../client/build")
 app.config["SECRET_KEY"] = "secret!"
@@ -55,7 +55,7 @@ def handle_connect():
     user = None
     try:
         if token:
-            decoded_token = jwt.decode(token, JWT_SECRET_KEY)
+            decoded_token = jwt.decode(token, jwt_secret_key)
             id = decoded_token["id"]
             user = app_users[id]
             if user == None:
@@ -78,7 +78,7 @@ def handle_who_am_i():
     token = jwt.encode({
         "id": user["id"],
         "exp": datetime.datetime.utcnow() + datetime.timedelta(weeks=1)
-    }, JWT_SECRET_KEY)
+    }, jwt_secret_key)
     # Converting the token into a string
     token = token.decode('UTF-8')
     return user, token

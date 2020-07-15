@@ -8,6 +8,12 @@ import notifications
 import jwt
 import datetime
 
+# TODO: Compared to the Node.js version, Flask implementation of Bubbly API has some missing points.
+# When a user edits their info, Node.js version emits to all the rooms the user is connected to.
+# But this version just emits to only one room.
+# It may be implemented in the future, but in Flask-SocketIO obtaining info of sockets/rooms
+# is a little bit more complex than the Node.js version.
+
 jwt_secret_key = 'veryverysecret'
 
 app = Flask(__name__, static_folder="../client/build")

@@ -51,7 +51,7 @@ const RoomUserFormModal = React.memo<RoomUserFormModalProps>(
           onClose();
         });
       },
-      [io, roomId, roomUser, onClose]
+      [roomUser, io, roomId, onClose]
     );
 
     return (

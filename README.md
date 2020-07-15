@@ -1,7 +1,9 @@
 # Bubbly-Flask
 This is a clone of my own project [bubbly](https://github.com/onderonur/bubbly), with a python (flask) API created w/ [flask-socketio](https://flask-socketio.readthedocs.io/en/latest/).
 A dynamic chat application created w/ Socket.IO, React, TypeScript and Express, Node.js.  
-Live demo with Node.js API deployed on Heroku is **[here](https://bubbly-chat.herokuapp.com/)**.
+Live demo with Node.js API deployed on Heroku is **[here](https://bubbly-chat.herokuapp.com/)**.  
+**Note:** This project is not up-to-date with the Node.js version. This is rather an experimental project to practice Python.
+
 <p align="center">
   <img src="/assets/home-page.png" alt="Bubbly Logo"/>
 </p>

@@ -6,7 +6,7 @@ from nanoid import generate
 import notifications
 
 
-def find_user_by_socket_id(app_users, socket_id):
+def get_user_by_socket_id(app_users, socket_id):
     for user in app_users.values():
         user_socket_ids = user["socket_ids"]
         if socket_id in user_socket_ids:
@@ -17,19 +17,23 @@ def get_room_socket_ids(socket_ids_by_room, room_id):
     return socket_ids_by_room.get(room_id, [])
 
 
-def get_room_users(socket_ids_by_room, app_users, room_id):
+def get_room_users(socket_ids_by_room, app_users, room_id, socket_id):
     socket_ids = get_room_socket_ids(socket_ids_by_room, room_id)
     users = []
     for socket_id in socket_ids:
-        socket_user = find_user_by_socket_id(app_users, socket_id)
+        socket_user = get_user_by_socket_id(app_users, socket_id)
         if any(user["id"] == socket_user["id"] for user in users):
             break
         users.append(socket_user)
+    # Placing socket_user as the first in array
+    socket_user = get_user_by_socket_id(app_users, socket_id)
+    users = list(filter(lambda user: user["id"] != socket_user["id"], users))
+    users.insert(0, socket_user)
     return users
 
 
 def is_user_already_in_room(app_users, room_id, socket_ids_by_room, joining_socket_id):
-    user = find_user_by_socket_id(app_users, joining_socket_id)
+    user = get_user_by_socket_id(app_users, joining_socket_id)
     user_socket_ids = user["socket_ids"]
     other_user_socket_ids = list(
         filter(lambda socket_id: socket_id != joining_socket_id, user_socket_ids))
@@ -47,7 +51,7 @@ def get_socket_room_ids():
 
 
 def did_user_leave_the_room_completely(app_users, socket_ids_by_room, room_id, leaving_socket_id):
-    leaving_user = find_user_by_socket_id(app_users, leaving_socket_id)
+    leaving_user = get_user_by_socket_id(app_users, leaving_socket_id)
     user_socket_ids = leaving_user["socket_ids"]
     # Getting user's socket ids other than the current one
     # leaving the room.
@@ -73,7 +77,7 @@ def handle_user_leaving_the_room(app_users, socket_ids_by_room, leaving_socket_i
         filter(lambda socket_id: socket_id != leaving_socket_id, room_socket_ids))
     socket_ids_by_room[room_id] = room_socket_ids
 
-    socket_user = find_user_by_socket_id(app_users, leaving_socket_id)
+    socket_user = get_user_by_socket_id(app_users, leaving_socket_id)
     emit("finished typing", socket_user, room=room_id, include_self=False)
 
     if did_user_leave_the_room_completely(app_users, socket_ids_by_room, room_id, leaving_socket_id) == True:

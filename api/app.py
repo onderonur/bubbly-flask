@@ -110,7 +110,8 @@ def handle_my_custom_event(room_id):
         emit("joined to room", current_user, room=room_id)
         notifications.notify_joined_to_room(room_id, current_user["username"])
 
-    room_users = utils.get_room_users(socket_ids_by_room, app_users, room_id)
+    room_users = utils.get_room_users(
+        socket_ids_by_room, app_users, room_id, socket_id)
     return room_users
 
 

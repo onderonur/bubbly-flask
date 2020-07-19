@@ -45,8 +45,7 @@ const RoomUserFormModal = React.memo<RoomUserFormModalProps>(
       FormikConfig<RoomUserFormValues>['onSubmit']
     >(
       (values, formikHelpers) => {
-        const editedUser = { ...roomUser, ...values };
-        io?.emit('edit user', roomId, editedUser, () => {
+        io?.emit('edit user', roomId, values, () => {
           formikHelpers.setSubmitting(false);
           onClose();
         });

@@ -25,8 +25,8 @@ const StyledAppBar = styled(AppBar)`
 `;
 
 const AppHeader = React.memo(function AppHeader() {
-  const { settings, toggleVolume } = useSettings();
-  const { volume } = settings;
+  const { settings, toggleIsSoundOn } = useSettings();
+  const { isSoundOn } = settings;
 
   const { toggleTheme } = useSettings();
 
@@ -88,8 +88,8 @@ const AppHeader = React.memo(function AppHeader() {
               {isDarkTheme ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
             <Route path={routes.chatRoom.path()}>
-              <IconButton onClick={toggleVolume}>
-                {volume ? <VolumeUpIcon /> : <VolumeOffIcon />}
+              <IconButton onClick={toggleIsSoundOn}>
+                {isSoundOn ? <VolumeUpIcon /> : <VolumeOffIcon />}
               </IconButton>
             </Route>
           </Stack>

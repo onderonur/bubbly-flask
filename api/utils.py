@@ -109,3 +109,9 @@ def create_new_user(socket_id):
         "color": generate_random_hex_color()
     }
     return user
+
+minutes_in_hour = 60
+seconds_in_minute = 60
+
+def hours_to_seconds(hours):
+    return hours * minutes_in_hour * seconds_in_minute

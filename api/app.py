@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, session, send_from_directory, jsonify
+from flask import Flask, request, session, send_from_directory, jsonify, make_response
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from nanoid import generate
 from time import time
@@ -7,6 +7,7 @@ import utils
 import notifications
 import jwt
 import datetime
+from flask_cors import CORS
 
 # TODO: Compared to the Node.js version, Flask implementation of Bubbly API has some missing points.
 # When a user edits their info, Node.js version emits to all the rooms the user is connected to.
@@ -18,6 +19,11 @@ jwt_secret_key = 'veryverysecret'
 
 app = Flask(__name__, static_folder="../client/build")
 app.config["SECRET_KEY"] = "secret!"
+
+# Because we don't use proxy requests in development mode web client,
+# we set CORS here.
+# TODO: Will check if the app is running in debug mode.
+CORS(app)
 
 themed_rooms = [
     {"title": 'Random Chat', "slug": 'random-chat'},
@@ -34,7 +40,9 @@ themed_rooms = [
 
 @app.route("/api/rooms/themed")
 def themed_rooms_list():
-    return jsonify(themed_rooms)
+    response = make_response(jsonify(themed_rooms))
+    response.headers["Cache-Control"] = f'public, max-age={utils.hours_to_seconds(24)}'
+    return response
 
 
 socketio = SocketIO(app, cors_allowed_origins="*")

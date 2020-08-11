@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import useSwr from 'swr';
 import { Maybe } from 'types';
+import { apiUrl } from 'utils';
 
 interface ThemedRoom {
   title: string;
@@ -18,7 +19,8 @@ export function useThemedRooms() {
 
 type ThemedRoomsProviderProps = React.PropsWithChildren<{}>;
 
-const fetcher = (url: string) => fetch(url).then((response) => response.json());
+const fetcher = (url: string) =>
+  fetch(`${apiUrl}${url}`).then((response) => response.json());
 
 function ThemedRoomsProvider({ children }: ThemedRoomsProviderProps) {
   const { data } = useSwr<ThemedRoom[]>('/api/rooms/themed', fetcher);

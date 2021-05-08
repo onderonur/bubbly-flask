@@ -3,7 +3,7 @@ autopep8==1.5.3
 click==7.1.2
 colorama==0.4.3
 dnspython==1.16.0
-eventlet==0.25.2
+eventlet==0.31.0
 filetype==1.0.7
 Flask==1.1.2
 Flask-Cors==3.0.8
